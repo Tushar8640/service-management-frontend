@@ -5,6 +5,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Swal from "sweetalert2";
 import { useSignUpMutation } from "@/redux/features/auth/authApi";
+import { useAppDispatch } from "@/redux/hooks";
 
 const RegisterForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -17,6 +18,7 @@ const RegisterForm = () => {
 
   const [signUp, { data, isError, isLoading, isSuccess, error }] =
     useSignUpMutation();
+
 
   //signUp user
   const handleSubmit = (e: { preventDefault: () => void }) => {
