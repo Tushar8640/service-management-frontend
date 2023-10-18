@@ -29,6 +29,7 @@ export const authApi = api.injectEndpoints({
         }
       },
     }),
+    
     signUp: builder.mutation({
       query: (data) => ({
         url: "/auth/signup",

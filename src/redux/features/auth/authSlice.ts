@@ -4,6 +4,7 @@ interface IUserState {
     token: string | null;
     email: string | null;
     id: string | null;
+    role: string | null;
   };
   isLoading: boolean;
 }
@@ -13,6 +14,7 @@ const initialState: IUserState = {
     token: null,
     email: null,
     id: null,
+    role: null
   },
   isLoading: false,
 };
@@ -36,8 +38,9 @@ export const authSlice = createSlice({
 
       // loggedin user
       const user = parseJwt(token);
-      state.user.email = user?.userEmail;
+      state.user.email = user?.email;
       state.user.id = user?.userId;
+      state.user.role = user?.role;
     },
     userLoggedOut: (state) => {
       state.user.token = null;
