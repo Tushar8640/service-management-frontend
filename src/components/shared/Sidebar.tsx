@@ -57,6 +57,11 @@ const Sidebar = () => {
                 Blogs
               </Link>
             </li>
+            <li className={`${active === "feedbacks" ? "link-active" : "link-hover"}`}>
+              <Link href="/dashboard/feedbacks" className="link-styles">
+                Feedbacks
+              </Link>
+            </li>
             <li className={`${active === "bookings" ? "link-active" : "link-hover"}`}>
               <Link href="/dashboard/bookings" className="link-styles">
                 Bookings

@@ -14,13 +14,13 @@ const Feedbacks = () => {
           {data?.data?.map((feedback: IFeedback, i: number) => (
             <div className="bg-white p-4 rounded-lg shadow-lg" key={i}>
               <div className="text-lg font-semibold text-gray-900 mb-3 text-center">
-                {(feedback?.user as IUser)?.name.firstName} {(feedback?.user as IUser)?.name.lastName}
+                {(feedback?.user as IUser)?.name?.firstName} {(feedback?.user as IUser)?.name?.lastName}
               </div>
               <p className="flex items-center justify-center">
                 <AiFillStar className="text-yellow-600" />
-                {feedback.rating}
+                {feedback?.rating}
               </p>
-              <p className="text-gray-700 text-center">{feedback.comments}</p>
+              <p className="text-gray-700 text-center">{feedback?.comments}</p>
             </div>
           ))}
         </div>

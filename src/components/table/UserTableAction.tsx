@@ -4,9 +4,9 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, 
 import {Button} from "../ui/button";
 import {DotsHorizontalIcon} from "@radix-ui/react-icons";
 import Link from "next/link";
-import {useDeleteServiceMutation} from "@/redux/features/services/serviceApi";
 import {useDeleteUserMutation, useMakeAdminMutation} from "@/redux/features/users/userApi";
 import {useGetSingleUserQuery} from "@/redux/features/auth/authApi";
+import {useAppSelector} from "@/redux/hooks";
 
 //
 export type TableProps = {
@@ -14,7 +14,7 @@ export type TableProps = {
 };
 const UserTableAction = ({id}: TableProps) => {
   const {data} = useGetSingleUserQuery(id);
-  console.log(data?.data);
+  const {user} = useAppSelector((state) => state.auth);
   //delete service
   const [deleteUser, {data: deleteData, isSuccess, isError}] = useDeleteUserMutation();
   const handleDeleteService = (id: string) => {
@@ -93,7 +93,7 @@ const UserTableAction = ({id}: TableProps) => {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => handleDeleteService(id)}>Delete</DropdownMenuItem>
-        {data?.data?.role === "user" && <DropdownMenuItem onClick={() => handleMakeAdmin(data?.data?.email)}>Make Admin</DropdownMenuItem>}
+        {data?.data?.role === "user" && user.role === "super admin" ? <DropdownMenuItem onClick={() => handleMakeAdmin(data?.data?.email)}>Make Admin</DropdownMenuItem> : null}
       </DropdownMenuContent>
     </DropdownMenu>
   );

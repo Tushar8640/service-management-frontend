@@ -4,7 +4,7 @@ import {RootState} from "../store";
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://shofy-backend-israt-emu.vercel.app/api/v1",
+    baseUrl: "https://service-management-backend.vercel.app/api/v1",
     prepareHeaders: (headers, {getState}) => {
       const token = (getState() as RootState).auth.user.token;
 

@@ -1,15 +1,15 @@
 import UserProfile from "@/components/form/UserProfile";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
 import MainLayout from "@/layouts/MainLayout";
 import PrivateLayout from "@/layouts/PrivateLayout";
-import { useGetSingleUserQuery } from "@/redux/features/auth/authApi";
-import { useAppSelector } from "@/redux/hooks";
-import { useState } from "react";
+import {useGetSingleUserQuery} from "@/redux/features/auth/authApi";
+import {useAppSelector} from "@/redux/hooks";
+import {useState} from "react";
 
 export default function profile() {
   const userId = useAppSelector((state) => state.auth.user.id);
-  const { data: user, isLoading } = useGetSingleUserQuery(userId);
+  const {data: user, isLoading} = useGetSingleUserQuery(userId);
   // Initialize state to hold form input values
   console.log(user);
 

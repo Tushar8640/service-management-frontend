@@ -8,7 +8,7 @@ export default function users() {
 
   return (
     <DashboardLayout>
-      <div>users</div>
+      <h1 className="text-3xl font-semibold font-serif">Users:</h1>
       <UserTable />
     </DashboardLayout>
   );

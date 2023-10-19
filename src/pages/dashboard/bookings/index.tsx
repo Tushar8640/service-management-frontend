@@ -7,7 +7,7 @@ import React from "react";
 export default function users() {
   return (
     <DashboardLayout>
-      <div>Bookings</div>
+      <h1 className="text-3xl font-semibold font-serif">All Bookings:</h1>
       <BookingTable />
     </DashboardLayout>
   );

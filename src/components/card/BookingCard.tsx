@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
+import { useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -12,13 +12,11 @@ import {
 
 import { Button } from "../ui/button";
 
-import { useAddToCartMutation } from "@/redux/features/cart/cartApi";
-import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
 import { useAppSelector } from "@/redux/hooks";
 
 import Link from "next/link";
 import { IBookingProps } from "@/interfaces/booking";
+import Swal from "sweetalert2";
 import { useUpdateBookingStatusMutation } from "@/redux/features/bookings/bookingApi";
 
 const BookingCard = ({ booking }: IBookingProps) => {
@@ -55,6 +53,7 @@ const BookingCard = ({ booking }: IBookingProps) => {
       Swal.fire("Oops!", `Something went wrong`, "error");
     }
   }, [data, isError, isSuccess]);
+
   return (
     <Card className="h-full">
       <Link href={`/services/${booking._id}`}>

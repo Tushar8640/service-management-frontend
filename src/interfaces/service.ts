@@ -1,4 +1,4 @@
-import { IUser } from "./user";
+import {IUser} from "./user";
 
 export type IService = {
   _id: string;
@@ -15,8 +15,8 @@ export type IReviewRating = {
   _id: string;
   rating: number;
   review: string;
-  service:string | IService;
-  user: IUser ;
+  service: string | IService;
+  user: IUser | string;
 };
 
 export type IServiceProps = {

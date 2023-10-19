@@ -51,28 +51,8 @@ export const columns: ColumnDef<IService>[] = [
     },
     cell: ({row}) => <div className="lowercase">{row.getValue("category")}</div>,
   },
-  {
-    accessorKey: "subCategory",
-    header: ({column}) => {
-      return (
-        <Button variant="ghost" className="hover:bg-gray-300 text-gray-200" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Sub Category
-        </Button>
-      );
-    },
-    cell: ({row}) => <div className="lowercase">{row.getValue("subCategory")}</div>,
-  },
-  {
-    accessorKey: "quantity",
-    header: ({column}) => {
-      return (
-        <Button variant="ghost" className="hover:bg-gray-300 text-gray-200" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Quantity
-        </Button>
-      );
-    },
-    cell: ({row}) => <div className="lowercase">{row.getValue("quantity")}</div>,
-  },
+
+ 
   {
     accessorKey: "price",
     header: ({column}) => {
@@ -142,7 +122,7 @@ const ServiceTable = () => {
   return (
     <div className="w-full">
       <div className="flex items-center py-4 px-1">
-        <Input placeholder="Filter Products..." value={(table.getColumn("category")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("category")?.setFilterValue(event.target.value)} className="max-w-sm" />
+        <Input placeholder="Filter Services..." value={(table.getColumn("category")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("category")?.setFilterValue(event.target.value)} className="max-w-sm" />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

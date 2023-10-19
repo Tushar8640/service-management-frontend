@@ -4,10 +4,12 @@ import LeftContent from "@/components/feedback/LeftContent";
 import Feedbacks from "@/components/feedback/Feedbacks";
 import AvailableService from "@/components/services/AvailableService";
 import LatestBlog from "@/components/blogs/LatestBlog";
+import HeroSection from "@/components/home/HeroSection";
 
 export default function Home() {
   return (
     <MainLayout>
+      <HeroSection />
       {/* available services */}
       <AvailableService />
       {/* upcoming services */}
