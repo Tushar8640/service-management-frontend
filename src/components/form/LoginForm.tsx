@@ -7,6 +7,7 @@ import { useLoginMutation } from "@/redux/features/auth/authApi";
 import Error from "../shared/Error";
 import { useAppDispatch } from "@/redux/hooks";
 import { userLoggedIn } from "@/redux/features/auth/authSlice";
+import { useRouter } from "next/router";
 
 interface CustomError {
   status: number;
@@ -29,6 +30,7 @@ const LoginForm = () => {
     useLoginMutation();
   const dispatch = useAppDispatch();
 
+  const router = useRouter();
   //login
   const handleLogin = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -38,6 +40,7 @@ const LoginForm = () => {
         email,
         password,
       });
+    
     } else {
       Swal.fire("Sorry!", `Please fill up all required fields`, "info");
     }
@@ -48,8 +51,13 @@ const LoginForm = () => {
     } else {
       dispatch(userLoggedIn({ token: data?.accessToken }));
     }
-
   }, [data, error, isError]);
+
+  useEffect(() => {
+    if (data?.success) {
+      router.push("/");
+    }
+  }, [data]);
 
   return (
     <div className=" flex flex-col justify-center items-center mx-auto px-2 mt-5 md:mt-0 w-3/5">
@@ -114,13 +122,8 @@ const LoginForm = () => {
         >
           Quick Sign up here
         </Link>
-        <Link
-          href="/dashboard"
-          className="hover:underline text-sky-500 ml-1 font-bold"
-        >
-          Dashboard
-        </Link>
-        .
+    
+        
       </p>
     </div>
   );

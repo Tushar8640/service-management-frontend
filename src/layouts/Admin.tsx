@@ -15,7 +15,6 @@ export default function DashboardLayout({ children }: LayoutType) {
 
   const isChecked = useAuthCheck();
 
-  const { data } = useGetAllUsersQuery("");
 
   useEffect(() => {
     if (isChecked) {

@@ -6,6 +6,21 @@ import { Button } from "../ui/button";
 import Swal from "sweetalert2";
 import { useSignUpMutation } from "@/redux/features/auth/authApi";
 import { useAppDispatch } from "@/redux/hooks";
+import { useRouter } from "next/router";
+import Error from "../shared/Error";
+
+interface CustomError {
+  status: number;
+  data: {
+    message: string;
+  };
+
+  isUnhandledError: boolean;
+  meta: {
+    request: any;
+    response: any;
+  };
+}
 
 const RegisterForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -15,11 +30,12 @@ const RegisterForm = () => {
   const [password, setPassword] = useState("");
   const [repetPassword, setRepetPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const [signUp, { data, isError, isLoading, isSuccess, error }] =
+  const [signUp, { data: responseData, isError, isLoading, isSuccess, error }] =
     useSignUpMutation();
 
-
+  const router = useRouter();
   //signUp user
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -39,12 +55,21 @@ const RegisterForm = () => {
         address,
       };
       signUp(data);
+   
     }
   };
 
   useEffect(() => {
-    console.log(data, error);
-  }, [data, error]);
+    if (isError || error) {
+      setErrorMessage((error as CustomError)?.data?.message);
+    }
+  }, [error, isError]);
+
+  useEffect(() => {
+    if (responseData?.success) {
+      router.push("/login");
+    }
+  }, [responseData]);
 
   return (
     <div className="h-screen flex">
@@ -143,6 +168,7 @@ const RegisterForm = () => {
                   >
                     <p>Sign Up</p>
                   </Button>
+                  <div>{isError && <Error message={errorMessage} />}</div>
                 </div>
               </div>
             </form>
