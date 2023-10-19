@@ -21,7 +21,7 @@ export const cartApi = api.injectEndpoints({
 
     deleteToCart: builder.mutation({
       query: (data) => ({
-        url: `/carts/delete`,
+        url: `/carts/deleteProduct`,
         method: "POST",
         body: data,
       }),

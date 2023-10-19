@@ -4,7 +4,7 @@ import {RootState} from "../store";
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/v1",
+    baseUrl: "https://shofy-backend-israt-emu.vercel.app/api/v1",
     prepareHeaders: (headers, {getState}) => {
       const token = (getState() as RootState).auth.user.token;
 
@@ -15,6 +15,6 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Services", "singleService", "cart", "faq", "feedback", "Bookings", "users", "reviewRatings", "booking", "user"],
+  tagTypes: ["Services", "singleService", "cart", "faq", "feedback", "Bookings", "users", "reviewRatings", "booking", "user", "faqs", "carts", "blog", "blogs", "feedbacks"],
   endpoints: () => ({}),
 });

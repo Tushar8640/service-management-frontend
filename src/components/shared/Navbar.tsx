@@ -35,8 +35,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between w-full md:max-w-7xl h-full mx-auto ">
           <div className="flex items-center">
             {/* <img className="w-16" src={logo} alt="log" /> */}
-            <a href="">Logo</a>
-            <p className="font-semibold text-lg">Shofy</p>
+            <a href="">PHOTO</a>
+            <p className="font-semibold text-lg">WALA</p>
           </div>
           <div>
             <ul className="flex items-center">
@@ -54,7 +54,7 @@ const Navbar = () => {
                   </Link>
                 </Button>
               </li>
-    
+
               <li>
                 <Button variant="link" asChild>
                   <Link href="/bookings" className="text-gray-900">
@@ -62,7 +62,7 @@ const Navbar = () => {
                   </Link>
                 </Button>
               </li>
-              { (user.role !== "user" && user.role) &&  (
+              {user.role !== "user" && user.role && (
                 <li>
                   <Button variant="link" asChild>
                     <Link href="/dashboard" className="text-gray-900">
@@ -107,7 +107,9 @@ const Navbar = () => {
                     {user?.email && (
                       <>
                         <DropdownMenuItem className="cursor-pointer font-semibold font-serif">
-                          {userData?.data?.name?.firstName}
+                          <Link href={"/profile"}>
+                            {userData?.data?.name?.firstName}
+                          </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={handleLogout}
