@@ -48,7 +48,7 @@ const LoginForm = () => {
     } else {
       dispatch(userLoggedIn({ token: data?.accessToken }));
     }
-    console.log(data);
+
   }, [data, error, isError]);
 
   return (

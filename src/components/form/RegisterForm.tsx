@@ -24,7 +24,6 @@ const RegisterForm = () => {
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    console.log(data);
     if (password !== repetPassword) {
       Swal.fire("Oops!", `Password didn't match`, "error");
       return;

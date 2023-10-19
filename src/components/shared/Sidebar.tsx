@@ -22,7 +22,7 @@ const Sidebar = () => {
   useEffect(() => {
     dispatch(pathChange(router.pathname));
   }, [location, dispatch]);
-  console.log(active);
+
   return (
     <div className={`md:flex flex-col bg-gray-300 h-full text-gray-800`}>
       <div className="space-y-3  ">
@@ -42,11 +42,11 @@ const Sidebar = () => {
 
             <li
               className={`${
-                active === "addproduct" ? "link-active" : "link-hover"
+                active === "addservice" ? "link-active" : "link-hover"
               }`}
             >
-              <Link href="/dashboard/addproduct" className="link-styles">
-                Add product
+              <Link href="/dashboard/cccccaddservice" className="link-styles">
+                Add Service
               </Link>
             </li>
             <li

@@ -1,5 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-"use client";
 
 import * as React from "react";
 // import {CaretSortIcon, ChevronDownIcon, DotsHorizontalIcon} from "@radix-ui/react-icons";
@@ -35,13 +34,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetProductsQuery } from "@/redux/features/products/productApi";
+
 import { DataTablePagination } from "./DataTablePagination";
-// import {ChevronDownIcon} from "@radix-ui/react-icons";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 
 import TableAction from "./TableAction";
-import { IService } from "@/interfaces/service";
 import { useGetServicesQuery } from "@/redux/features/services/serviceApi";
+import { IService } from "@/interfaces/service";
 //defining table column
 export const columns: ColumnDef<IService>[] = [
   {
@@ -183,7 +182,6 @@ const ServiceTable = () => {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  console.log(data);
   //creating table using hook
   const table = useReactTable({
     data: data?.data,
@@ -235,8 +233,7 @@ const ServiceTable = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Columns
-              {/* <ChevronDownIcon className="ml-2 h-4 w-4" /> */}
+              Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -281,8 +278,8 @@ const ServiceTable = () => {
             ))}
           </TableHeader>
           <TableBody>
-            {table?.getRowModel()?.rows?.length ? (
-              table?.getRowModel()?.rows.map((row) => (
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}

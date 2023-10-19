@@ -5,7 +5,7 @@ import React from "react";
 
 export default function users() {
   const { data } = useGetAllUsersQuery("");
-  console.log(data);
+
   return (
     <DashboardLayout>
       <div>users</div>

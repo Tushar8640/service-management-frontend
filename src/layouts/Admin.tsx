@@ -16,14 +16,14 @@ export default function DashboardLayout({ children }: LayoutType) {
   const isChecked = useAuthCheck();
 
   const { data } = useGetAllUsersQuery("");
-  console.log(data);
+
   useEffect(() => {
     if (isChecked) {
       if (!user.email) {
         router.push("/login");
       }
     }
-    console.log(isChecked);
+
   }, [isChecked, user.email, router]);
 
   if (!isChecked) {

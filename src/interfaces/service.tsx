@@ -9,3 +9,7 @@ export type IService = {
   images: string[];
   addedBy: string;
 };
+
+export type IServiceProps = {
+  product: IService;
+};

@@ -1,17 +1,31 @@
-
-import {Table} from "@tanstack/react-table";
-import {Button} from "../ui/button";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select";
+import { Table } from "@tanstack/react-table";
+import { Button } from "../ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import {
+  DoubleArrowDownIcon,
+  DoubleArrowLeftIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@radix-ui/react-icons";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
 }
 //pagination for product table
-export function DataTablePagination<TData>({table}: DataTablePaginationProps<TData>) {
+export function DataTablePagination<TData>({
+  table,
+}: DataTablePaginationProps<TData>) {
   return (
     <div className="flex items-center justify-between px-2 mt-2">
       <div className="flex-1 text-sm text-muted-foreground">
-        {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected.
+        {table.getFilteredSelectedRowModel().rows.length} of{" "}
+        {table.getFilteredRowModel().rows.length} row(s) selected.
       </div>
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">
@@ -35,25 +49,46 @@ export function DataTablePagination<TData>({table}: DataTablePaginationProps<TDa
           </Select>
         </div>
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+          Page {table.getState().pagination.pageIndex + 1} of{" "}
+          {table.getPageCount()}
         </div>
         {/* //prev and next buttons  */}
         <div className="flex items-center space-x-2">
-          <Button variant="outline" className="hidden h-8 w-8 p-0 lg:flex" onClick={() => table.setPageIndex(0)} disabled={!table.getCanPreviousPage()}>
+          <Button
+            variant="outline"
+            className="hidden h-8 w-8 p-0 lg:flex"
+            onClick={() => table.setPageIndex(0)}
+            disabled={!table.getCanPreviousPage()}
+          >
             <span className="sr-only">Go to first page</span>
-            {/* <D className="h-4 w-4" /> */}
+            <DoubleArrowLeftIcon className="h-4 w-4" />
           </Button>
-          <Button variant="outline" className="h-8 w-8 p-0" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+          <Button
+            variant="outline"
+            className="h-8 w-8 p-0"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
             <span className="sr-only">Go to previous page</span>
-            {/* <ChevronLeftIcon className="h-4 w-4" /> */}
+            <ChevronLeftIcon className="h-4 w-4" />
           </Button>
-          <Button variant="outline" className="h-8 w-8 p-0" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+          <Button
+            variant="outline"
+            className="h-8 w-8 p-0"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
             <span className="sr-only">Go to next page</span>
-            {/* <ChevronRightIcon className="h-4 w-4" /> */}
+            <ChevronRightIcon className="h-4 w-4" />
           </Button>
-          <Button variant="outline" className="hidden h-8 w-8 p-0 lg:flex" onClick={() => table.setPageIndex(table.getPageCount() - 1)} disabled={!table.getCanNextPage()}>
+          <Button
+            variant="outline"
+            className="hidden h-8 w-8 p-0 lg:flex"
+            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+            disabled={!table.getCanNextPage()}
+          >
             <span className="sr-only">Go to last page</span>
-            {/* <DoubleArrowRightIcon className="h-4 w-4" /> */}
+            <DoubleArrowDownIcon className="h-4 w-4" />
           </Button>
         </div>
       </div>

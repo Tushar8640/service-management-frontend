@@ -9,8 +9,8 @@ export const productApi = api.injectEndpoints({
       }),
       providesTags: ["Products"],
     }),
-    getSingleServices: builder.query({
-      query: ({ id }) => ({
+    getSingleService: builder.query({
+      query: ( id ) => ({
         url: `/services/${id}`,
         method: "GET",
         // body: data,
@@ -48,5 +48,5 @@ export const {
   useAddServiceMutation,
   useDeleteServiceMutation,
   useGetServicesQuery,
-  useGetSingleServicesQuery,
+  useGetSingleServiceQuery,
 } = productApi;

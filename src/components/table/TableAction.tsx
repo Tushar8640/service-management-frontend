@@ -1,18 +1,26 @@
-import {useDeleteProductMutation} from "@/redux/features/products/productApi";
-import {useEffect} from "react";
+import { useDeleteProductMutation } from "@/redux/features/products/productApi";
+import { useEffect } from "react";
 import Swal from "sweetalert2";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
-import {Button} from "../ui/button";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "../ui/button";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
 //
 export type TableProps = {
   id: string;
 };
-const TableAction = ({id}: TableProps) => {
+const TableAction = ({ id }: TableProps) => {
   //delete product
-  const [deleteProduct, {data: deleteData, isSuccess, isError}] = useDeleteProductMutation();
+  const [deleteProduct, { data: deleteData, isSuccess, isError }] =
+    useDeleteProductMutation();
   const handleDeleteProduct = (id: string) => {
     Swal.fire({
       title: "Do you want to delete this product?",
@@ -47,17 +55,19 @@ const TableAction = ({id}: TableProps) => {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-8 w-8 p-0">
           <span className="sr-only">Open menu</span>
-          {/* <DotsHorizontalIcon className="h-4 w-4" /> */}
+          <DotsHorizontalIcon className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
         <DropdownMenuItem>
-          <Link href={`/dashboard/editProduct/${id}`}>Edit</Link>
+          <Link href={`/dashboard/services/editservice/${id}`}>Edit</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => handleDeleteProduct(id)}>Delete</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => handleDeleteProduct(id)}>
+          Delete
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
