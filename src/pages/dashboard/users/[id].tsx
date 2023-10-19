@@ -6,7 +6,7 @@ import {useGetSingleUserQuery} from "@/redux/features/auth/authApi";
 import {useRouter} from "next/router";
 import React from "react";
 
-export default function editservice() {
+export default function EditUser() {
   const router = useRouter();
   const {id} = router.query;
   const {data, isLoading} = useGetSingleUserQuery(id);

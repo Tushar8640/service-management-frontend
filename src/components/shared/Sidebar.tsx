@@ -47,6 +47,16 @@ const Sidebar = () => {
                 Services
               </Link>
             </li>
+            <li className={`${active === "faq" ? "link-active" : "link-hover"}`}>
+              <Link href="/dashboard/faq" className="link-styles">
+                FAQs
+              </Link>
+            </li>
+            <li className={`${active === "blogs" ? "link-active" : "link-hover"}`}>
+              <Link href="/dashboard/blogs" className="link-styles">
+                Blogs
+              </Link>
+            </li>
             <li className={`${active === "bookings" ? "link-active" : "link-hover"}`}>
               <Link href="/dashboard/bookings" className="link-styles">
                 Bookings

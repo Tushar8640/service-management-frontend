@@ -9,8 +9,6 @@ import {useAddServiceMutation} from "@/redux/features/services/serviceApi";
 const AddServiceForm = () => {
   const {user} = useAppSelector((state) => state.auth);
   const [addService, {data, isError, isSuccess}] = useAddServiceMutation();
-  const [images, setImages] = useState<string[]>([]);
-  const [imageBox, setImageBox] = useState<string[]>(["add"]);
   // Initialize state to hold form input values
   const [formData, setFormData] = useState({
     title: "",
@@ -19,22 +17,15 @@ const AddServiceForm = () => {
     category: "",
     status: "available",
     description: "",
-    images: images,
+    image: "",
     addedBy: user.id,
   });
-  //handling images
 
-  const handleImages = (e: ChangeEvent<HTMLInputElement>) => {
-    const image = e.target.value;
-    setImages((prevData) => [...prevData, image]);
-    console.log(images);
-  };
   //setting form data to add service
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const {name, value} = e.target;
     const numericValue = name === "price" ? parseFloat(value) : value;
     setFormData({...formData, [name]: numericValue});
-    formData.images = images;
   };
 
   // Handle form submission
@@ -88,17 +79,8 @@ const AddServiceForm = () => {
 
         <div className="grid grid-cols-2 items-start gap-2 mb-2">
           <div>
-            {imageBox.map((image, index) => (
-              <div key={index}>
-                <label htmlFor={`image${index}`}>Image URL</label>
-                <Input type="text" id={`image${index}`} name={`image${index}`} onChange={(e) => handleImages(e)} className="rounded w-full" />
-              </div>
-            ))}
-          </div>
-          <div className="flex mt-6">
-            <div className="py-1.5 px-2 rounded bg-zinc-700 text-white" onClick={() => setImageBox((prevData) => [...prevData, "add"])}>
-              Add More Image
-            </div>
+            <label htmlFor={`image`}>Image URL</label>
+            <Input type="text" id={`image`} name={`image`} onChange={handleInputChange} className="rounded w-full" />
           </div>
         </div>
 

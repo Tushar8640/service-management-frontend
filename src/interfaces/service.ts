@@ -6,7 +6,7 @@ export type IService = {
   duration: string;
   price: number;
   category: string;
-  images: string[];
+  image: string;
   addedBy: string;
 };
 

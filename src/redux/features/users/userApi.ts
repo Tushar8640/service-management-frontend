@@ -21,14 +21,13 @@ export const userApi = api.injectEndpoints({
         url: `/users/profile`,
         method: "GET",
       }),
-      providesTags: ["user"],
     }),
     makeAdmin: builder.mutation({
       query: (email) => ({
         url: `/users/make-admin/${email}`,
         method: "POST",
       }),
-      invalidatesTags: ["users", "user"],
+      invalidatesTags: ["users"],
     }),
     updateUser: builder.mutation({
       query: (data) => ({
@@ -36,14 +35,14 @@ export const userApi = api.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["users", "user"],
+      invalidatesTags: ["users"],
     }),
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `/users/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["user", "users"],
+      invalidatesTags: ["users"],
     }),
   }),
 });

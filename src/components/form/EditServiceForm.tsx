@@ -10,8 +10,7 @@ import {Option} from "lucide-react";
 
 const EditServiceForm = ({service}: IServiceProps) => {
   const [updateService, {data, isError, isSuccess}] = useUpdateServiceMutation();
-  const [images, setImages] = useState<string[]>(service?.images);
-  const [imageBox, setImageBox] = useState<string[]>(["add"]);
+
   // Initialize state to hold form input values
   const [formData, setFormData] = useState({
     title: service?.title,
@@ -19,20 +18,15 @@ const EditServiceForm = ({service}: IServiceProps) => {
     category: service?.category,
     status: service?.status,
     description: service?.description,
-    images: service?.images,
+    image: service?.image,
     duration: service?.duration,
   });
-  //handling images
-  const handleImages = (e: ChangeEvent<HTMLInputElement>) => {
-    const image = e.target.value;
-    setImages((prevImages) => [...prevImages, image]);
-  };
 
   //setting form data for edit
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const {name, value} = e.target;
-    setFormData({...formData, [name]: value});
-    formData.images = images;
+    const numericValue = name === "price" ? parseFloat(value) : value;
+    setFormData({...formData, [name]: numericValue});
   };
 
   // Handle form submission
@@ -93,17 +87,8 @@ const EditServiceForm = ({service}: IServiceProps) => {
 
         <div className="grid grid-cols-2 items-start gap-2 mb-2">
           <div>
-            {imageBox.map((image, index) => (
-              <div key={index}>
-                <label htmlFor={`image${index}`}>Image URL</label>
-                <Input type="text" id={`image${index}`} name={`image${index}`} onChange={handleImages} className="rounded w-full" />
-              </div>
-            ))}
-          </div>
-          <div className="flex mt-6">
-            <div className="py-1.5 px-2 rounded bg-zinc-700 text-white" onClick={() => setImageBox((prevData) => [...prevData, "add"])}>
-              Add More Image
-            </div>
+            <label htmlFor={`image`}>Image URL</label>
+            <Input type="text" id={`image`} name={`image`} onChange={handleInputChange} className="rounded w-full" />
           </div>
         </div>
 
