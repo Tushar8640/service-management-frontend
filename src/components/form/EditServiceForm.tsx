@@ -63,7 +63,7 @@ const EditProductForm = ({ product }: IServiceProps) => {
   return (
     <div className="w-10/12 mx-auto mt-4">
       <h1 className="text-3xl font-semibold text-center mb-3 font-serif ">
-        Update Product
+        Update Service
       </h1>
       <form onSubmit={handleSubmit} className="px-6 py-8 bg-gray-200 rounded">
         <div>

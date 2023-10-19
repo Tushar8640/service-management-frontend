@@ -14,7 +14,8 @@ const Sidebar = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const activeLink = path.split("/")[2];
+    const linkArr = path.split("/");
+    const activeLink = linkArr[linkArr.length - 1];
     dispatch(sidebarActiveChange(activeLink));
   }, [path, dispatch]);
 
@@ -45,7 +46,7 @@ const Sidebar = () => {
                 active === "addservice" ? "link-active" : "link-hover"
               }`}
             >
-              <Link href="/dashboard/cccccaddservice" className="link-styles">
+              <Link href="/dashboard/services/addservice" className="link-styles">
                 Add Service
               </Link>
             </li>
