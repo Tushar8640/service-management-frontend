@@ -1,3 +1,5 @@
+import { IUser } from "./user";
+
 export type IService = {
   _id: string;
   title: string;
@@ -8,6 +10,13 @@ export type IService = {
   category: string;
   image: string;
   addedBy: string;
+};
+export type IReviewRating = {
+  _id: string;
+  rating: number;
+  review: string;
+  service:string | IService;
+  user: IUser ;
 };
 
 export type IServiceProps = {

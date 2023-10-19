@@ -13,8 +13,6 @@ export default function bookings() {
   console.log(data);
   return (
     <MainLayout>
-      <div>index</div>
-      <div>Bookings</div>
       <div className="grid grid-cols-3">{}</div>
       <div className="grid grid-cols-3">
         {data?.data?.map((item: IBooking) => (

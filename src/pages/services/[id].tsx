@@ -6,10 +6,8 @@ import { useRouter } from "next/router";
 import React from "react";
 
 export default function ServiceDetails() {
-
   return (
     <MainLayout>
-      <h1>Hello</h1>
       <ServiceDetailsCard />
     </MainLayout>
   );

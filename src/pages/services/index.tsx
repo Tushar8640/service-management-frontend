@@ -10,7 +10,7 @@ export default function index() {
 
   return (
     <MainLayout>
-      <h1>Hello</h1>
+    
       <div className="grid grid-cols-3 mt-[100px] gap-3">
         {data?.data?.map((item: IService) => (
           <ServiceCard key={item._id} service={item} />

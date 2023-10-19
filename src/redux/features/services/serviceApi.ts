@@ -1,4 +1,4 @@
-import {api} from "../../api/apiSlice";
+import { api } from "../../api/apiSlice";
 ///api for product operation
 export const serviceApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,7 +18,7 @@ export const serviceApi = api.injectEndpoints({
       providesTags: ["singleService"],
     }),
     updateService: builder.mutation({
-      query: ({id, data}) => ({
+      query: ({ id, data }) => ({
         url: `/services/${id}`,
         method: "PATCH",
         body: data,
@@ -41,7 +41,30 @@ export const serviceApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Services"],
     }),
+    addReviews: builder.mutation({
+      query: (data) => ({
+        url: `/reviewRatings`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Services"],
+    }),
+    getReviews: builder.query({
+      query: (id) => ({
+        url: `/reviewRatings/getByService/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Services"],
+    }),
   }),
 });
 
-export const {useAddServiceMutation, useDeleteServiceMutation, useGetServicesQuery, useGetSingleServiceQuery, useUpdateServiceMutation} = serviceApi;
+export const {
+  useAddServiceMutation,
+  useAddReviewsMutation,
+  useDeleteServiceMutation,
+  useGetServicesQuery,
+  useGetSingleServiceQuery,
+  useUpdateServiceMutation,
+  useGetReviewsQuery,
+} = serviceApi;
