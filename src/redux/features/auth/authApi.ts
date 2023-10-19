@@ -1,5 +1,5 @@
-import {api} from "../../api/apiSlice";
-import {userLoggedIn} from "./authSlice";
+import { api } from "../../api/apiSlice";
+import { userLoggedIn } from "./authSlice";
 //user authentication api's
 export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -9,7 +9,7 @@ export const authApi = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      async onQueryStarted(_arg, {queryFulfilled, dispatch}) {
+      async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
           localStorage.setItem(
@@ -29,7 +29,7 @@ export const authApi = api.injectEndpoints({
         }
       },
     }),
-    
+
     signUp: builder.mutation({
       query: (data) => ({
         url: "/auth/signup",
@@ -50,7 +50,19 @@ export const authApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+    getUserProfile: builder.query({
+      query: () => ({
+        url: `/users/profile`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const {useLoginMutation, useSignUpMutation, useGetAllUsersQuery, useGetSingleUserQuery} = authApi;
+export const {
+  useLoginMutation,
+  useSignUpMutation,
+  useGetUserProfileQuery,
+  useGetAllUsersQuery,
+  useGetSingleUserQuery,
+} = authApi;
