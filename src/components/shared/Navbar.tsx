@@ -54,13 +54,7 @@ const Navbar = () => {
                   </Link>
                 </Button>
               </li>
-              <li>
-                <Button variant="link" asChild>
-                  <Link href="/checkout" className="text-gray-900">
-                    Checkout
-                  </Link>
-                </Button>
-              </li>
+    
               <li>
                 <Button variant="link" asChild>
                   <Link href="/bookings" className="text-gray-900">

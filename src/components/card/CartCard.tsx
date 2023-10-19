@@ -4,49 +4,34 @@ import { Button } from "../ui/button";
 
 import {
   useDeleteToCartMutation,
+  useGetSingleCartQuery,
   useHandleQuantityMutation,
 } from "@/redux/features/cart/cartApi";
 import { useAppSelector } from "@/redux/hooks";
 import Swal from "sweetalert2";
-import { useGetSingleProductQuery } from "@/redux/features/products/productApi";
-import { ICart, ICartProps } from "@/interfaces/cart";
+
+import {  ICartProps } from "@/interfaces/cart";
 import { DeleteIcon } from "lucide-react";
 import { useAddBookingMutation } from "@/redux/features/bookings/bookingApi";
 
-const CartCard = ({ product }: ICartProps) => {
-  const { data: productData } = useGetSingleProductQuery({
-    id: product.serviceId,
+const CartCard = ({ cart }: ICartProps) => {
+  const { data: cartData } = useGetSingleCartQuery({
+    id: cart.serviceId,
   });
-  //handling quantity
-  const [handleQuantity] = useHandleQuantityMutation();
-  const increaseQuantity = (operation: string) => {
-    handleQuantity({
-      user: user.id,
-      productId: product.serviceId,
-      operation,
-    });
-  };
-  const decreaseQuantity = (operation: string) => {
-    if (product.quantity > 0) {
-      handleQuantity({
-        user: user.id,
-        productId: product.serviceId,
-        operation,
-      });
-    }
-  };
 
-  //remove product from cart
+  //remove cart from cart
   const { user } = useAppSelector((state) => state.auth);
 
   const [deleteToCart, { data, isError, isSuccess }] =
     useDeleteToCartMutation();
+
   const handleDelete = () => {
     deleteToCart({
       user: user.id,
-      productId: product.serviceId,
+      serviceId: cart.serviceId,
     });
   };
+
   //showing success or error message on delete
   useEffect(() => {
     if (!data?.success && isError) {
@@ -56,7 +41,7 @@ const CartCard = ({ product }: ICartProps) => {
     if (data?.success && data?.data) {
       Swal.fire(
         "Congratulations!",
-        `Product Deleted from cart successfully!`,
+        `cart Deleted from cart successfully!`,
         "success"
       );
     }
@@ -76,8 +61,8 @@ const CartCard = ({ product }: ICartProps) => {
   const handleBook = () => {
     if (user.id) {
       book({
-        totalCost: product?.price,
-        service: product?.serviceId,
+        totalCost: cart?.price,
+        service: cart?.serviceId,
         user: user.id,
         date: currentDate,
         time: currentTime,
@@ -104,21 +89,18 @@ const CartCard = ({ product }: ICartProps) => {
       <CardContent className="">
         <div className="grid md:grid-cols-4 justify-between md:items-center gap-2">
           <img
-            src={productData?.data?.image}
+            src={cartData?.data?.image}
             alt="card image"
             className="w-14 h-14"
           />
           <div className="flex flex-col justify-center">
             <p className="lg:text-center mt-3 text-sm font-medium mx-auto">
-              {productData?.data?.category}
-            </p>
-            <p className="lg:text-center mt-3 text-sm font-medium mx-auto">
-              {product?.user}
+              {cartData?.data?.category}
             </p>
           </div>
 
           <div className="flex flex-col justify-center items-end">
-            <p>{(product?.price * product.quantity).toFixed(2)}৳</p>
+            <p>{(cart?.price * cart.quantity).toFixed(2)}৳</p>
           </div>
           <div className="flex items-center justify-center gap-1 mx-auto">
             <Button
