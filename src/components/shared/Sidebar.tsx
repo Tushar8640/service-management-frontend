@@ -35,7 +35,7 @@ const Sidebar = () => {
                 active === "seller" ? "link-active" : "link-hover"
               }`}
             >
-              <Link href="/dashboard/seller" className="link-styles">
+              <Link href="/dashboard" className="link-styles">
                 Dashboard
               </Link>
             </li>
@@ -51,11 +51,11 @@ const Sidebar = () => {
             </li>
             <li
               className={`${
-                active === "products" ? "link-active" : "link-hover"
+                active === "services" ? "link-active" : "link-hover"
               }`}
             >
-              <Link href="/dashboard/products" className="link-styles">
-                Products
+              <Link href="/dashboard/services" className="link-styles">
+                Services
               </Link>
             </li>
             <li

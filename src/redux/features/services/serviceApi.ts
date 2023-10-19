@@ -1,42 +1,41 @@
-import {api} from "../../api/apiSlice";
+import { api } from "../../api/apiSlice";
 ///api for product operation
 export const productApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getProducts: builder.query({
+    getServices: builder.query({
       query: (queryString) => ({
-        url: `/products?${queryString}`,
+        url: `/services?${queryString}`,
         method: "GET",
-        // body: data,
       }),
       providesTags: ["Products"],
     }),
-    getSingleProduct: builder.query({
-      query: ({id}) => ({
-        url: `/products/${id}`,
+    getSingleServices: builder.query({
+      query: ({ id }) => ({
+        url: `/services/${id}`,
         method: "GET",
         // body: data,
       }),
       providesTags: ["singleProduct"],
     }),
-    updateProduct: builder.mutation({
-      query: ({id, data}) => ({
-        url: `/products/${id}`,
+    updateService: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/services/${id}`,
         method: "PATCH",
         body: data,
       }),
       invalidatesTags: ["Products", "singleProduct"],
     }),
 
-    deleteProduct: builder.mutation({
+    deleteService: builder.mutation({
       query: (id) => ({
-        url: `/products/${id}`,
+        url: `/services/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Products"],
     }),
-    addProduct: builder.mutation({
+    addService: builder.mutation({
       query: (data) => ({
-        url: `/products`,
+        url: `/services`,
         method: "POST",
         body: data,
       }),
@@ -45,4 +44,9 @@ export const productApi = api.injectEndpoints({
   }),
 });
 
-export const {useAddProductMutation, useDeleteProductMutation, useGetProductsQuery, useGetSingleProductQuery, useUpdateProductMutation} = productApi;
+export const {
+  useAddServiceMutation,
+  useDeleteServiceMutation,
+  useGetServicesQuery,
+  useGetSingleServicesQuery,
+} = productApi;
