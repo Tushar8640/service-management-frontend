@@ -6,7 +6,6 @@ export type IBooking = {
   totalCost: number;
   date: string;
   time: string;
-  cart: string;
   service: string | IService;
   user: string | IUser;
   status: "pending" | "confirmed" | "canceled";
