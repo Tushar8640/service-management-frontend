@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import React from "react";
 
 export default function ServiceDetails() {
-  const router = useRouter();
 
   return (
     <MainLayout>

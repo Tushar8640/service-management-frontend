@@ -17,26 +17,16 @@ const ServiceDetailsCard = () => {
   const {data, isLoading} = useGetSingleServiceQuery(id);
   //handling quantity of product
   const [quantity, setQuantity] = useState(1);
-  const handleQuantity = (operation: string) => {
-    if (operation === "plus") {
-      setQuantity(quantity + 1);
-    }
-    if (operation === "minus" && quantity > 0) {
-      setQuantity(quantity - 1);
-    }
-  };
+
   //adding product to cart
   const { user } = useAppSelector((state) => state.auth);
   const [addToCart, { data: addData, isSuccess, isError }] =
     useAddToCartMutation();
   const handleAddToCart = () => {
     addToCart({
-      product: {
-        price: data?.data?.price,
-        name: data?.data?.name,
-        productId: data?.data?._id,
-        quantity: quantity,
-      },
+      price: data?.data?.price,
+      serviceId: data?.data?._id,
+      quantity: quantity,
       user: user.id,
     });
   };
@@ -49,7 +39,7 @@ const ServiceDetailsCard = () => {
     if (addData?.success && addData?.data) {
       Swal.fire(
         "Congratulations!",
-        `Product Added to cart successfully!`,
+        `Service Added to cart successfully!`,
         "success"
       );
     }
@@ -68,18 +58,10 @@ const ServiceDetailsCard = () => {
             <ProductBadge text="Price:" value={`${data?.data?.price}`} />
             <ProductBadge text="Status:" value={`${data?.data?.status}`} />
             <ProductBadge text="Category:" value={`${data?.data?.category}`} />
-            <ProductBadge
-              text="Sub Category:"
-              value={`${data?.data?.subCategory}`}
-            />
+ 
           </div>
           <div className="border-b border-gray-300 my-2">
-            <p className="text-lg">
-              <span className="font-medium ">Color:</span> {data?.data?.color}
-            </p>
-            <p>
-              <span className="font-medium ">Size:</span> {data?.data?.size}
-            </p>
+        
             <h1 className="my-2">
               {" "}
               <span className="font-semibold text-primary my-2 text-lg ">
@@ -90,21 +72,7 @@ const ServiceDetailsCard = () => {
             <p>
               {/* <Rating initialRating={parseFloat((data?.data?.rating?.reduce((acc: any, rating: any) => acc + rating, 0) / data?.data?.rating?.length).toFixed(1))} emptySymbol={<FaStar className="text-yellow-200 text-lg" />} fullSymbol={<FaStar className="text-yellow-500 text-lg" />} readonly></Rating> */}
             </p>
-            <div className="flex items-center gap-1">
-              <Button
-                className="bg-gray-200 hover:bg-gray-300 text-black font-bold"
-                onClick={() => handleQuantity("plus")}
-              >
-                +
-              </Button>
-              <h2 className="font-bold">{quantity}</h2>
-              <Button
-                className="bg-gray-200 hover:bg-gray-300 text-black font-bold"
-                onClick={() => handleQuantity("minus")}
-              >
-                -
-              </Button>
-            </div>
+   
             <Button
               variant={"outline"}
               className="my-4 w-1/5 bg-white hover:bg-black hover:text-gray-300"
@@ -113,21 +81,8 @@ const ServiceDetailsCard = () => {
               Add to Cart
             </Button>
           </div>
-          <div>
-            <p>
-              <span className="font-medium ">Product SKU:</span>
-              {data?.data?.sku}
-            </p>
-            <p>
-              <span className="font-medium ">Product Dimension:</span>
-              {data?.data?.dimension}
-            </p>
-          </div>
-          <div>
-            <p className="flex items-center gap-2 text-lg font-medium">
-              30 days easy return
-            </p>
-          </div>
+  
+      
         </div>
       </div>
     </section>

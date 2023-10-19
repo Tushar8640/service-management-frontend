@@ -6,8 +6,7 @@ import Swal from "sweetalert2";
 import {useEffect} from "react";
 import {useDeleteBlogMutation} from "@/redux/features/blog/blog";
 import Link from "next/link";
-import Image from "next/image";
-import blogImg from "../../assets/blog.png";
+
 const BlogCard = ({blog}: IBlogProps) => {
   //delete faq
   const [deleteBlog, {data: deleteData, isSuccess, isError}] = useDeleteBlogMutation();

@@ -37,15 +37,7 @@ const ServiceCard = ({ service }: IServiceProps) => {
       Swal.fire("Sorry!", `You have to login first!`, "error");
     }
   };
-  //
-  const handleQuantity = (operation: string) => {
-    if (operation === "plus") {
-      setQuantity(quantity + 1);
-    }
-    if (operation === "minus" && quantity > 0) {
-      setQuantity(quantity - 1);
-    }
-  };
+
   //showing success or error message when adding service
   useEffect(() => {
     if (!data?.success && isError) {
@@ -77,25 +69,11 @@ const ServiceCard = ({ service }: IServiceProps) => {
           <p>Category:{service?.category}</p>
           <p>Status:{service?.status}</p>
           <p>price:{service?.price}৳</p>
-          +-
+          
         </CardContent>
       </Link>
       <CardFooter className="flex items-center justify-between">
-        <div className="flex items-center gap-1">
-          <Button
-            className="bg-gray-200 hover:bg-gray-300 text-black font-bold"
-            onClick={() => handleQuantity("plus")}
-          >
-            +
-          </Button>
-          <h2 className="font-bold">{quantity}</h2>
-          <Button
-            className="bg-gray-200 hover:bg-gray-300 text-black font-bold"
-            onClick={() => handleQuantity("minus")}
-          >
-            -
-          </Button>
-        </div>
+    
         <Button onClick={handleAddToCart}>Add to Cart</Button>
       </CardFooter>
     </Card>

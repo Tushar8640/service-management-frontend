@@ -15,7 +15,7 @@ export default function MainLayout({ children }: LayoutType) {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto">{children}</div>
+      <div className="container mx-auto pt-20">{children}</div>
     </>
   );
 }
