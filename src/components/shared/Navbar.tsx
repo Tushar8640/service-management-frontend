@@ -30,7 +30,7 @@ const Navbar = () => {
   console.log(userData);
 
   return (
-    <nav className="w-full h-16 fixed top backdrop-blur-lg z-10 text-primary">
+    <nav className="w-full h-16 fixed top backdrop-blur-lg z-10 text-primary ">
       <div className="h-full w-full bg-white/60">
         <div className="flex items-center justify-between w-full md:max-w-7xl h-full mx-auto ">
           <div className="flex items-center">

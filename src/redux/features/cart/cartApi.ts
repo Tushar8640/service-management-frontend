@@ -4,7 +4,7 @@ export const cartApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getSingleCart: builder.query({
       query: (id) => ({
-        url: `/cart/${id}`,
+        url: `/carts/${id}`,
         method: "GET",
         // body: data,
       }),
@@ -12,7 +12,7 @@ export const cartApi = api.injectEndpoints({
     }),
     addToCart: builder.mutation({
       query: (data) => ({
-        url: `/cart`,
+        url: `/carts`,
         method: "POST",
         body: data,
       }),
@@ -21,7 +21,7 @@ export const cartApi = api.injectEndpoints({
 
     deleteToCart: builder.mutation({
       query: (data) => ({
-        url: `/cart/deleteProduct`,
+        url: `/carts/deleteProduct`,
         method: "POST",
         body: data,
       }),
@@ -29,7 +29,7 @@ export const cartApi = api.injectEndpoints({
     }),
     handleQuantity: builder.mutation({
       query: (data) => ({
-        url: `/cart/handleQuantity`,
+        url: `/carts/handleQuantity`,
         method: "POST",
         body: data,
       }),
