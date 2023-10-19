@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect } from "react";
+import {useEffect} from "react";
 
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { sidebarActiveChange } from "@/redux/features/activeLink/activeLinkSlice";
-import { pathChange } from "@/redux/features/filter/filterSlice";
+import {useAppDispatch, useAppSelector} from "@/redux/hooks";
+import {sidebarActiveChange} from "@/redux/features/activeLink/activeLinkSlice";
+import {pathChange} from "@/redux/features/filter/filterSlice";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 //sidebar of seller dashboard
 const Sidebar = () => {
   const active = useAppSelector((state) => state?.active?.sidebarActive);
@@ -31,46 +31,28 @@ const Sidebar = () => {
           {/* <img src={logo} alt="logo" className="w-14" /> */}
           {/* sidebar link  */}
           <ul className="pt-2 pb-4 space-y-1 text-sm">
-            <li
-              className={`${
-                active === "seller" ? "link-active" : "link-hover"
-              }`}
-            >
+            <li className={`${active === "seller" ? "link-active" : "link-hover"}`}>
               <Link href="/dashboard" className="link-styles">
                 Dashboard
               </Link>
             </li>
 
-            <li
-              className={`${
-                active === "addservice" ? "link-active" : "link-hover"
-              }`}
-            >
-              <Link href="/dashboard/services/addservice" className="link-styles">
+            <li className={`${active === "addService" ? "link-active" : "link-hover"}`}>
+              <Link href="/dashboard/services/addService" className="link-styles">
                 Add Service
               </Link>
             </li>
-            <li
-              className={`${
-                active === "services" ? "link-active" : "link-hover"
-              }`}
-            >
+            <li className={`${active === "services" ? "link-active" : "link-hover"}`}>
               <Link href="/dashboard/services" className="link-styles">
                 Services
               </Link>
             </li>
-            <li
-              className={`${
-                active === "bookings" ? "link-active" : "link-hover"
-              }`}
-            >
+            <li className={`${active === "bookings" ? "link-active" : "link-hover"}`}>
               <Link href="/dashboard/bookings" className="link-styles">
                 Bookings
               </Link>
             </li>
-            <li
-              className={`${active === "users" ? "link-active" : "link-hover"}`}
-            >
+            <li className={`${active === "users" ? "link-active" : "link-hover"}`}>
               <Link href="/dashboard/users" className="link-styles">
                 Users
               </Link>

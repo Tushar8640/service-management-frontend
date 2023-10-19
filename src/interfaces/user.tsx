@@ -11,8 +11,10 @@ export type IUser = {
   profile?: string;
   address: string;
 };
-
 export type IUserProps = {
+  user: IUser;
+};
+export type IUsersProps = {
   users: IUser[];
 };
 

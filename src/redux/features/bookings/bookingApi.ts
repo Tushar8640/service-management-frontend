@@ -1,29 +1,44 @@
-import { api } from "../../api/apiSlice";
-///api for product operation
+import {api} from "../../api/apiSlice";
+///api for booking operation
 export const bookingApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getBookings: builder.query({
-      query: (queryString) => ({
-        url: `/bookings?${queryString}`,
+      query: () => ({
+        url: `/bookings/getAll`,
+        method: "GET",
+      }),
+      providesTags: ["Bookings"],
+    }),
+    getBookingsByUser: builder.query({
+      query: (user) => ({
+        url: `/bookings/getAll/${user}`,
         method: "GET",
       }),
       providesTags: ["Bookings"],
     }),
     getSingleBooking: builder.query({
-      query: ( id ) => ({
+      query: (id) => ({
         url: `/bookings/${id}`,
         method: "GET",
         // body: data,
       }),
-      providesTags: ["singleProduct"],
+      providesTags: ["booking"],
     }),
-    updateBooking: builder.mutation({
-      query: ({ id, data }) => ({
-        url: `/bookings/${id}`,
-        method: "PATCH",
+    updateBookingStatus: builder.mutation({
+      query: (data) => ({
+        url: `/bookings/updateStatus`,
+        method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Bookings", "singleProduct"],
+      invalidatesTags: ["Bookings", "booking"],
+    }),
+    reScheduleBooking: builder.mutation({
+      query: (data) => ({
+        url: `/bookings/reSchedule`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Bookings", "booking"],
     }),
 
     deleteBooking: builder.mutation({
@@ -31,7 +46,7 @@ export const bookingApi = api.injectEndpoints({
         url: `/bookings/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Bookings"],
+      invalidatesTags: ["Bookings", "booking"],
     }),
     addBooking: builder.mutation({
       query: (data) => ({
@@ -44,9 +59,4 @@ export const bookingApi = api.injectEndpoints({
   }),
 });
 
-export const {
-  useAddBookingMutation,
-  useDeleteBookingMutation,
-  useGetBookingsQuery,
-  useGetSingleBookingQuery,
-} = bookingApi;
+export const {useAddBookingMutation, useDeleteBookingMutation, useGetBookingsQuery, useGetSingleBookingQuery, useUpdateBookingStatusMutation, useReScheduleBookingMutation, useGetBookingsByUserQuery} = bookingApi;

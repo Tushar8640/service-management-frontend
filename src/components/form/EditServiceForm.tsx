@@ -1,36 +1,44 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { useUpdateProductMutation } from "@/redux/features/products/productApi";
+import {ChangeEvent, FormEvent, useEffect, useState} from "react";
+import {Input} from "../ui/input";
+import {Button} from "../ui/button";
 import Swal from "sweetalert2";
-import { IServiceProps } from "@/interfaces/service";
-import { useRouter } from "next/router";
+import {IServiceProps} from "@/interfaces/service";
+import {useRouter} from "next/router";
+import {useUpdateServiceMutation} from "@/redux/features/services/serviceApi";
+import {Select} from "@radix-ui/react-select";
+import {Option} from "lucide-react";
 
-const EditProductForm = ({ product }: IServiceProps) => {
-  const [updateProduct, { data, isError, isSuccess }] =
-    useUpdateProductMutation();
+const EditServiceForm = ({service}: IServiceProps) => {
+  const [updateService, {data, isError, isSuccess}] = useUpdateServiceMutation();
+  const [images, setImages] = useState<string[]>(service?.images);
+  const [imageBox, setImageBox] = useState<string[]>(["add"]);
   // Initialize state to hold form input values
-  const [category, setCategory] = useState(product?.category);
   const [formData, setFormData] = useState({
-    title: product?.title,
-    price: product?.price,
-    category: product?.category,
-    status: product?.status,
-    description: product?.description,
-    images: product?.images,
+    title: service?.title,
+    price: service?.price,
+    category: service?.category,
+    status: service?.status,
+    description: service?.description,
+    images: service?.images,
+    duration: service?.duration,
   });
+  //handling images
+  const handleImages = (e: ChangeEvent<HTMLInputElement>) => {
+    const image = e.target.value;
+    setImages((prevImages) => [...prevImages, image]);
+  };
+
   //setting form data for edit
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const {name, value} = e.target;
+    setFormData({...formData, [name]: value});
+    formData.images = images;
   };
 
   // Handle form submission
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    updateProduct({ id: product?._id, data: formData });
+    updateService({id: service?._id, data: formData});
   };
   //showing success or error message
   const router = useRouter();
@@ -40,139 +48,72 @@ const EditProductForm = ({ product }: IServiceProps) => {
     }
 
     if (data?.success && data?.data) {
-      Swal.fire("Congratulations!", `Product Updated successfully!`, "success");
-      router.push("/dashboard/manage");
+      Swal.fire("Congratulations!", `Service Updated successfully!`, "success");
+      router.push("/dashboard/services");
     }
   }, [isSuccess, isError, data, router]);
-  //handling category and corresponding subcategory
-  const categoryArray = [
-    "Men",
-    "Women",
-    "All Wallets & Small Leather Goods",
-    "Jewelry",
-  ];
-  const subCategoryArray1 = ["T-shirt", "Polos", "Pants", "Shoes"];
-  const subCategoryArray2 = ["Sharee", "Kurti", "Pants", "Shoes"];
-  const subCategoryArray3 = ["Watch", "HandBag", "Wallet", "Bags"];
-  const subCategoryArray4 = ["Earrings", "Necklace", "Bangles"];
-  const handleCategory = (e: ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setCategory(value);
-    setFormData({ ...formData, [name]: value });
-  };
+
   return (
     <div className="w-10/12 mx-auto mt-4">
-      <h1 className="text-3xl font-semibold text-center mb-3 font-serif ">
-        Update Service
-      </h1>
-      <form onSubmit={handleSubmit} className="px-6 py-8 bg-gray-200 rounded">
-        <div>
-          <label htmlFor="name">Name</label>
-          <Input
-            type="text"
-            id="name"
-            name="name"
-            defaultValue={product?.title}
-            onChange={handleInputChange}
-            required
-            className="rounded my-2"
-          />
-        </div>
-
+      <h1 className="text-3xl font-semibold text-center mb-3 font-serif ">Update Service</h1>
+      <form onSubmit={handleSubmit} className="px-8 py-8 bg-gray-200 rounded">
         <div className="grid grid-cols-2 items-center gap-2 w-full my-2">
-          <div>
-            <label htmlFor="price">Price</label>
-            <Input
-              type="number"
-              id="price"
-              name="price"
-              defaultValue={product?.price}
-              onChange={handleInputChange}
-              required
-              className="rounded"
-            />
+          <div className="flex flex-col">
+            <label htmlFor="title">Title</label>
+            <Input type="text" id="title" name="title" value={formData?.title} onChange={handleInputChange} required className="rounded" />
           </div>
-        </div>
-        <div className="grid grid-cols-2 items-center gap-2 w-full my-2"></div>
-        <div className="grid grid-cols-2 items-center gap-2 w-full my-2">
           <div className="flex flex-col">
             <label htmlFor="category">Category</label>
-            <select
-              id="category"
-              name="category"
-              defaultValue={product?.category}
-              onChange={handleCategory}
-              required
-              className="rounded w-full py-2 px-2"
-            >
-              <option value={product?.category}>{product?.category}</option>
-              {categoryArray?.map((s: string, i: number) => (
-                <option key={i} value={s}>
-                  {s}
-                </option>
-              ))}
-            </select>
+            <Input type="text" id="category" name="category" value={formData.category} onChange={handleInputChange} required className="rounded" />
           </div>
         </div>
-        <div className="grid grid-cols-2 items-center gap-2 w-full my-2">
-          <div className="flex flex-col">
+        <div className="grid grid-cols-3 items-center gap-2 w-full my-2">
+          <div>
+            <label htmlFor="price">Price</label>
+            <Input type="number" id="price" name="price" value={formData.price} onChange={handleInputChange} required className="rounded" />
+          </div>
+
+          <div>
+            <label htmlFor="duration">Duration</label>
+            <Input type="text" id="duration" name="duration" value={formData.duration} onChange={handleInputChange} required className="rounded" />
+          </div>
+          <div>
             <label htmlFor="status">Status</label>
-            <select
-              id="status"
-              name="status"
-              defaultValue={product?.status}
-              onChange={handleInputChange}
-              required
-              className="rounded w-full py-2 px-2"
-            >
-              <option value="">Select Status</option>
-              <option value="In Stock">In Stock</option>
-              <option value="Out of Stock">Out of Stock</option>
+            <select id="status" name="status" defaultValue={formData?.status} onChange={handleInputChange} required className="rounded w-full py-2 px-2">
+              <option value="available">available</option>
+              <option value="unavailable">unavailable</option>
             </select>
           </div>
         </div>
 
         <div>
           <label htmlFor="description">Description</label>
-          <textarea
-            rows={4}
-            className="w-full rounded"
-            id="description"
-            name="description"
-            defaultValue={product?.description}
-            onChange={handleInputChange}
-          ></textarea>
+          <textarea rows={4} className="w-full rounded" id="description" name="description" value={formData.description} onChange={handleInputChange}></textarea>
         </div>
 
-        <div>
-          <label htmlFor="image">Image URL</label>
-          <Input
-            type="text"
-            id="image"
-            name="image"
-            defaultValue={product?.images}
-            onChange={handleInputChange}
-            className="rounded"
-          />
+        <div className="grid grid-cols-2 items-start gap-2 mb-2">
+          <div>
+            {imageBox.map((image, index) => (
+              <div key={index}>
+                <label htmlFor={`image${index}`}>Image URL</label>
+                <Input type="text" id={`image${index}`} name={`image${index}`} onChange={handleImages} className="rounded w-full" />
+              </div>
+            ))}
+          </div>
+          <div className="flex mt-6">
+            <div className="py-1.5 px-2 rounded bg-zinc-700 text-white" onClick={() => setImageBox((prevData) => [...prevData, "add"])}>
+              Add More Image
+            </div>
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="dimension">Dimension</label>
-          <Input
-            type="text"
-            id="dimension"
-            name="dimension"
-            defaultValue={product?.duration}
-            onChange={handleInputChange}
-            className="rounded"
-          />
+        <div className="flex justify-end">
+          <Button className="mt-2" type="submit">
+            Edit Service
+          </Button>
         </div>
-
-        <Button className="mt-2" type="submit">
-          Edit Product
-        </Button>
       </form>
     </div>
   );
 };
-export default EditProductForm;
+export default EditServiceForm;

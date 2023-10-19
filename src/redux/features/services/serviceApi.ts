@@ -1,29 +1,29 @@
-import { api } from "../../api/apiSlice";
+import {api} from "../../api/apiSlice";
 ///api for product operation
-export const productApi = api.injectEndpoints({
+export const serviceApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getServices: builder.query({
       query: (queryString) => ({
         url: `/services?${queryString}`,
         method: "GET",
       }),
-      providesTags: ["Products"],
+      providesTags: ["Services"],
     }),
     getSingleService: builder.query({
-      query: ( id ) => ({
+      query: (id) => ({
         url: `/services/${id}`,
         method: "GET",
         // body: data,
       }),
-      providesTags: ["singleProduct"],
+      providesTags: ["singleService"],
     }),
     updateService: builder.mutation({
-      query: ({ id, data }) => ({
+      query: ({id, data}) => ({
         url: `/services/${id}`,
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["Products", "singleProduct"],
+      invalidatesTags: ["Services", "singleService"],
     }),
 
     deleteService: builder.mutation({
@@ -31,7 +31,7 @@ export const productApi = api.injectEndpoints({
         url: `/services/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: ["Services"],
     }),
     addService: builder.mutation({
       query: (data) => ({
@@ -39,14 +39,9 @@ export const productApi = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: ["Services"],
     }),
   }),
 });
 
-export const {
-  useAddServiceMutation,
-  useDeleteServiceMutation,
-  useGetServicesQuery,
-  useGetSingleServiceQuery,
-} = productApi;
+export const {useAddServiceMutation, useDeleteServiceMutation, useGetServicesQuery, useGetSingleServiceQuery, useUpdateServiceMutation} = serviceApi;

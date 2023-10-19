@@ -11,5 +11,5 @@ export type IService = {
 };
 
 export type IServiceProps = {
-  product: IService;
+  service: IService;
 };

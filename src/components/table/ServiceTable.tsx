@@ -2,160 +2,89 @@
 
 import * as React from "react";
 // import {CaretSortIcon, ChevronDownIcon, DotsHorizontalIcon} from "@radix-ui/react-icons";
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+import {ColumnDef, ColumnFiltersState, SortingState, VisibilityState, flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable} from "@tanstack/react-table";
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import {Button} from "@/components/ui/button";
+import {Checkbox} from "@/components/ui/checkbox";
+import {DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
+import {Input} from "@/components/ui/input";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 
-import { DataTablePagination } from "./DataTablePagination";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
+import {DataTablePagination} from "./DataTablePagination";
+import {ChevronDownIcon} from "@radix-ui/react-icons";
 
 import TableAction from "./TableAction";
-import { useGetServicesQuery } from "@/redux/features/services/serviceApi";
-import { IService } from "@/interfaces/service";
+import {useGetServicesQuery} from "@/redux/features/services/serviceApi";
+import {IService} from "@/interfaces/service";
 //defining table column
 export const columns: ColumnDef<IService>[] = [
   {
     id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
+    header: ({table}) => <Checkbox checked={table.getIsAllPageRowsSelected()} onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)} aria-label="Select all" />,
+    cell: ({row}) => <Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} aria-label="Select row" />,
     enableSorting: false,
     enableHiding: false,
   },
   {
     accessorKey: "status",
-    header: ({ column }) => {
+    header: ({column}) => {
       return (
-        <Button
-          variant="ghost"
-          className="hover:bg-gray-300 text-gray-200"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
+        <Button variant="ghost" className="hover:bg-gray-300 text-gray-200" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
           Status
         </Button>
       );
     },
-    cell: ({ row }) => (
+    cell: ({row}) => (
       <div className="capitalize">
-        <span
-          className={`px-3 py-1 rounded-2xl ${
-            row.getValue("status") === "In Stock"
-              ? "bg-green-200"
-              : "bg-red-200 "
-          }`}
-        >
-          {row.getValue("status")}
-        </span>
+        <span className={`px-3 py-1 rounded-2xl ${row.getValue("status") === "In Stock" ? "bg-green-200" : "bg-red-200 "}`}>{row.getValue("status")}</span>
       </div>
     ),
   },
   {
     accessorKey: "category",
-    header: ({ column }) => {
+    header: ({column}) => {
       return (
-        <Button
-          variant="ghost"
-          className="hover:bg-gray-300 text-gray-200"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
+        <Button variant="ghost" className="hover:bg-gray-300 text-gray-200" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
           Category
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("category")}</div>
-    ),
+    cell: ({row}) => <div className="lowercase">{row.getValue("category")}</div>,
   },
   {
     accessorKey: "subCategory",
-    header: ({ column }) => {
+    header: ({column}) => {
       return (
-        <Button
-          variant="ghost"
-          className="hover:bg-gray-300 text-gray-200"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
+        <Button variant="ghost" className="hover:bg-gray-300 text-gray-200" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
           Sub Category
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("subCategory")}</div>
-    ),
+    cell: ({row}) => <div className="lowercase">{row.getValue("subCategory")}</div>,
   },
   {
     accessorKey: "quantity",
-    header: ({ column }) => {
+    header: ({column}) => {
       return (
-        <Button
-          variant="ghost"
-          className="hover:bg-gray-300 text-gray-200"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
+        <Button variant="ghost" className="hover:bg-gray-300 text-gray-200" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
           Quantity
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("quantity")}</div>
-    ),
+    cell: ({row}) => <div className="lowercase">{row.getValue("quantity")}</div>,
   },
   {
     accessorKey: "price",
-    header: ({ column }) => {
+    header: ({column}) => {
       return (
         <div className="text-right">
-          <Button
-            variant="ghost"
-            className="hover:bg-gray-300 text-gray-200"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <Button variant="ghost" className="hover:bg-gray-300 text-gray-200" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
             Price
           </Button>
         </div>
       );
     },
-    cell: ({ row }) => {
+    cell: ({row}) => {
       const price = parseFloat(row.getValue("price"));
       return <div className="text-right font-medium">${price}</div>;
     },
@@ -163,23 +92,20 @@ export const columns: ColumnDef<IService>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      const product = row.original;
+    cell: ({row}) => {
+      const service = row.original;
 
-      return <TableAction id={product?._id} />;
+      return <TableAction id={service?._id} />;
     },
   },
 ];
 //table
 const ServiceTable = () => {
-  const { data, isLoading } = useGetServicesQuery("");
+  const {data, isLoading} = useGetServicesQuery("");
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
   //creating table using hook
@@ -211,25 +137,12 @@ const ServiceTable = () => {
   });
   //when data is loading,show loading state
   if (isLoading) {
-    return (
-      <h1 className="font-semibold text-2xl font-serif text-center">
-        Loading...
-      </h1>
-    );
+    return <h1 className="font-semibold text-2xl font-serif text-center">Loading...</h1>;
   }
   return (
     <div className="w-full">
       <div className="flex items-center py-4 px-1">
-        <Input
-          placeholder="Filter Products..."
-          value={
-            (table.getColumn("category")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn("category")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        <Input placeholder="Filter Products..." value={(table.getColumn("category")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("category")?.setFilterValue(event.target.value)} className="max-w-sm" />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -242,14 +155,7 @@ const ServiceTable = () => {
               .filter((column) => column.getCanHide())
               .map((column) => {
                 return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
+                  <DropdownMenuCheckboxItem key={column.id} className="capitalize" checked={column.getIsVisible()} onCheckedChange={(value) => column.toggleVisibility(!!value)}>
                     {column.id}
                   </DropdownMenuCheckboxItem>
                 );
@@ -265,12 +171,7 @@ const ServiceTable = () => {
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id} className="text-center">
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                     </TableHead>
                   );
                 })}
@@ -280,27 +181,17 @@ const ServiceTable = () => {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className="bg-gray-200 border-b border-gray-300"
-                >
+                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} className="bg-gray-200 border-b border-gray-300">
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="text-center">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columns.length} className="h-24 text-center">
                   No results.
                 </TableCell>
               </TableRow>

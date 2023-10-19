@@ -1,10 +1,9 @@
 import AddServiceForm from "@/components/form/AddServiceForm";
 import DashboardLayout from "@/layouts/Admin";
 
-export default function addproduct() {
+export default function AddService() {
   return (
     <DashboardLayout>
-      <div>Add New services</div>
       <AddServiceForm />
     </DashboardLayout>
   );

@@ -5,17 +5,21 @@ import {Button} from "../ui/button";
 import {DotsHorizontalIcon} from "@radix-ui/react-icons";
 import Link from "next/link";
 import {useDeleteServiceMutation} from "@/redux/features/services/serviceApi";
+import {useDeleteUserMutation, useMakeAdminMutation} from "@/redux/features/users/userApi";
+import {useGetSingleUserQuery} from "@/redux/features/auth/authApi";
 
 //
 export type TableProps = {
   id: string;
 };
-const TableAction = ({id}: TableProps) => {
+const UserTableAction = ({id}: TableProps) => {
+  const {data} = useGetSingleUserQuery(id);
+  console.log(data?.data);
   //delete service
-  const [deleteService, {data: deleteData, isSuccess, isError}] = useDeleteServiceMutation();
+  const [deleteUser, {data: deleteData, isSuccess, isError}] = useDeleteUserMutation();
   const handleDeleteService = (id: string) => {
     Swal.fire({
-      title: "Do you want to delete this service?",
+      title: "Do you want to delete this user?",
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Yes",
@@ -28,7 +32,7 @@ const TableAction = ({id}: TableProps) => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteService(id);
+        deleteUser(id);
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
       }
@@ -37,11 +41,42 @@ const TableAction = ({id}: TableProps) => {
   //showing success or error message on delete
   useEffect(() => {
     if (deleteData?.success && isSuccess) {
-      Swal.fire("Great!", "Service deleted successfully!", "success");
+      Swal.fire("Great!", "User deleted successfully!", "success");
     } else if (!deleteData?.success && isError) {
       Swal.fire("Oops!", `Something went wrong`, "error");
     }
   }, [deleteData, isError, isSuccess]);
+  //make admin
+  const [makeAdmin, {data: updateData, isSuccess: updateSuccess, isError: updateError}] = useMakeAdminMutation();
+  const handleMakeAdmin = (email: string) => {
+    Swal.fire({
+      title: "Do you want to make this user admin?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: "No",
+      customClass: {
+        actions: "my-actions",
+        cancelButton: "order-1 right-gap",
+        confirmButton: "order-2",
+        denyButton: "order-3",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        makeAdmin(email);
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  };
+  //showing success or error message on update
+  useEffect(() => {
+    if (updateData?.success && updateSuccess) {
+      Swal.fire("Great!", "Make admin successfully!", "success");
+    } else if (!updateData?.success && updateError) {
+      Swal.fire("Oops!", `Something went wrong`, "error");
+    }
+  }, [updateData, updateError, updateSuccess]);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -54,13 +89,14 @@ const TableAction = ({id}: TableProps) => {
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
         <DropdownMenuItem>
-          <Link href={`/dashboard/services/editservice/${id}`}>Edit</Link>
+          <Link href={`/dashboard/users/${id}`}>Edit</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => handleDeleteService(id)}>Delete</DropdownMenuItem>
+        {data?.data?.role === "user" && <DropdownMenuItem onClick={() => handleMakeAdmin(data?.data?.email)}>Make Admin</DropdownMenuItem>}
       </DropdownMenuContent>
     </DropdownMenu>
   );
 };
 
-export default TableAction;
+export default UserTableAction;

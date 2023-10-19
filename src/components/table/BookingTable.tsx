@@ -2,186 +2,123 @@
 
 import * as React from "react";
 // import {CaretSortIcon, ChevronDownIcon, DotsHorizontalIcon} from "@radix-ui/react-icons";
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+import {ColumnDef, ColumnFiltersState, SortingState, VisibilityState, flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable} from "@tanstack/react-table";
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import {Button} from "@/components/ui/button";
+import {Checkbox} from "@/components/ui/checkbox";
+import {DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
+import {Input} from "@/components/ui/input";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 
-import { DataTablePagination } from "./DataTablePagination";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
-
-import TableAction from "./TableAction";
-import { useGetServicesQuery } from "@/redux/features/services/serviceApi";
-import { IService } from "@/interfaces/service";
-import { useGetBookingsQuery } from "@/redux/features/bookings/bookingApi";
+import {DataTablePagination} from "./DataTablePagination";
+import {ChevronDownIcon} from "@radix-ui/react-icons";
+import {useGetBookingsQuery} from "@/redux/features/bookings/bookingApi";
+import BookingTableAction from "./BookingTableAction";
+import {IBooking} from "@/interfaces/booking";
+import {IService} from "@/interfaces/service";
+import {IUser} from "@/interfaces/user";
 //defining table column
-export const columns: ColumnDef<IService>[] = [
+export const columns: ColumnDef<IBooking>[] = [
   {
     id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
+    header: ({table}) => <Checkbox checked={table.getIsAllPageRowsSelected()} onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)} aria-label="Select all" />,
+    cell: ({row}) => <Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} aria-label="Select row" />,
     enableSorting: false,
     enableHiding: false,
   },
   {
     accessorKey: "status",
-    header: ({ column }) => {
+    header: ({column}) => {
       return (
-        <Button
-          variant="ghost"
-          className="hover:bg-gray-300 text-gray-200"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
+        <Button variant="ghost" className="hover:bg-gray-300 text-gray-200" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
           Status
         </Button>
       );
     },
-    cell: ({ row }) => (
+    cell: ({row}) => (
       <div className="capitalize">
-        <span
-          className={`px-3 py-1 rounded-2xl ${
-            row.getValue("status") === "In Stock"
-              ? "bg-green-200"
-              : "bg-red-200 "
-          }`}
-        >
-          {row.getValue("status")}
-        </span>
+        <span className={`px-3 py-1 rounded-2xl ${row.getValue("status") === "In Stock" ? "bg-green-200" : "bg-red-200 "}`}>{row.getValue("status")}</span>
       </div>
     ),
   },
   {
-    accessorKey: "category",
-    header: ({ column }) => {
+    accessorKey: "date",
+    header: ({column}) => {
       return (
-        <Button
-          variant="ghost"
-          className="hover:bg-gray-300 text-gray-200"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Category
+        <Button variant="ghost" className="hover:bg-gray-300 text-gray-200" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Date
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("category")}</div>
-    ),
+    cell: ({row}) => <div className="lowercase">{row.getValue("date")}</div>,
   },
   {
-    accessorKey: "subCategory",
-    header: ({ column }) => {
+    accessorKey: "time",
+    header: ({column}) => {
       return (
-        <Button
-          variant="ghost"
-          className="hover:bg-gray-300 text-gray-200"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Sub Category
+        <Button variant="ghost" className="hover:bg-gray-300 text-gray-200" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Time
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("subCategory")}</div>
-    ),
+    cell: ({row}) => <div className="lowercase">{row.getValue("time")}</div>,
   },
   {
-    accessorKey: "quantity",
-    header: ({ column }) => {
+    accessorKey: "service",
+    header: ({column}) => {
       return (
-        <Button
-          variant="ghost"
-          className="hover:bg-gray-300 text-gray-200"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Quantity
+        <Button variant="ghost" className="hover:bg-gray-300 text-gray-200" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Service
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("quantity")}</div>
-    ),
+    cell: ({row}) => <div className="lowercase">{(row.original.service as IService)?.title}</div>,
   },
   {
-    accessorKey: "price",
-    header: ({ column }) => {
+    accessorKey: "user",
+    header: ({column}) => {
+      return (
+        <Button variant="ghost" className="hover:bg-gray-300 text-gray-200" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          User
+        </Button>
+      );
+    },
+    cell: ({row}) => <div className="lowercase">{(row.original.user as IUser)?.email}</div>,
+  },
+  {
+    accessorKey: "totalCost",
+    header: ({column}) => {
       return (
         <div className="text-right">
-          <Button
-            variant="ghost"
-            className="hover:bg-gray-300 text-gray-200"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
+          <Button variant="ghost" className="hover:bg-gray-300 text-gray-200" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
             Price
           </Button>
         </div>
       );
     },
-    cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"));
+    cell: ({row}) => {
+      const price = parseFloat(row.getValue("totalCost"));
       return <div className="text-right font-medium">${price}</div>;
     },
   },
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      const product = row.original;
+    cell: ({row}) => {
+      const booking = row.original;
 
-      return <TableAction id={product?._id} />;
+      return <BookingTableAction id={booking?._id} />;
     },
   },
 ];
 //table
 const BookingTable = () => {
-  const { data, isLoading } = useGetBookingsQuery("");
+  const {data, isLoading} = useGetBookingsQuery("");
   console.log(data);
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
   //creating table using hook
@@ -213,25 +150,12 @@ const BookingTable = () => {
   });
   //when data is loading,show loading state
   if (isLoading) {
-    return (
-      <h1 className="font-semibold text-2xl font-serif text-center">
-        Loading...
-      </h1>
-    );
+    return <h1 className="font-semibold text-2xl font-serif text-center">Loading...</h1>;
   }
   return (
     <div className="w-full">
       <div className="flex items-center py-4 px-1">
-        <Input
-          placeholder="Filter Products..."
-          value={
-            (table.getColumn("category")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn("category")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        <Input placeholder="Filter Products..." value={(table.getColumn("category")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("category")?.setFilterValue(event.target.value)} className="max-w-sm" />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -244,14 +168,7 @@ const BookingTable = () => {
               .filter((column) => column.getCanHide())
               .map((column) => {
                 return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
+                  <DropdownMenuCheckboxItem key={column.id} className="capitalize" checked={column.getIsVisible()} onCheckedChange={(value) => column.toggleVisibility(!!value)}>
                     {column.id}
                   </DropdownMenuCheckboxItem>
                 );
@@ -267,12 +184,7 @@ const BookingTable = () => {
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id} className="text-center">
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                     </TableHead>
                   );
                 })}
@@ -282,27 +194,17 @@ const BookingTable = () => {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className="bg-gray-200 border-b border-gray-300"
-                >
+                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} className="bg-gray-200 border-b border-gray-300">
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="text-center">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columns.length} className="h-24 text-center">
                   No results.
                 </TableCell>
               </TableRow>
