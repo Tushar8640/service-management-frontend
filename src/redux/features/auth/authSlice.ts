@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+
 interface IUserState {
   user: {
     token: string | null;

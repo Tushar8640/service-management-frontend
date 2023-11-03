@@ -1,8 +1,9 @@
 # Project Title (Your Project's Name)
 
-FrontEnd repo: https://github.com/Tushar8640/service-management-frontend
-Backend repo: https://github.com/Tushar8640/service-management-backend
-Live Site: https://servicemanagemnt.vercel.app/
+- FrontEnd repo: https://github.com/Tushar8640/service-management-frontend
+- Backend repo: https://github.com/Tushar8640/service-management-backend
+- Live Site: https://servicemanagemnt.vercel.app/
+- Video : https://www.loom.com/share/be13b6d20c8f49c3853f53094835d652
 
 ## Description
 

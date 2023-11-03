@@ -1,6 +1,7 @@
 import MainLayout from "@/layouts/MainLayout";
 import { useGetSingleBlogQuery } from "@/redux/features/blog/blog";
 import { useRouter } from "next/router";
+import Moment from "react-moment";
 
 export default function details() {
   const router = useRouter();
@@ -16,16 +17,14 @@ export default function details() {
             alt=""
             className="w-full h-60 sm:h-96 bg-gray-500"
           />
+
           <div className="p-6 pb-12 m-4 mx-auto -mt-16 space-y-6 lg:max-w-2xl sm:px-10 sm:mx-12 lg:rounded-md bg-gray-50">
+            <Moment format="DD-MM-YYYY">{data?.data?.createdAt}</Moment>
+
             <div className="space-y-2">
-              <a
-                rel="noopener noreferrer"
-                href="#"
-                className="inline-block text-2xl font-semibold sm:text-3xl"
-              >
+              <p className="inline-block text-2xl font-semibold sm:text-3xl">
                 {data?.data?.title}
-              </a>
-    
+              </p>
             </div>
             <div className="text-gray-800">
               <p>{data?.data?.description}</p>

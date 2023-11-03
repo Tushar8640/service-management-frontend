@@ -35,16 +35,7 @@ const Cart = () => {
         </div>
         <div className="grid grid-cols-1 gap-4 justify-center px-6 bg-gray-100 py-6">
           {content}
-          <div className="border-t border-gray-200 py-2 flex items-center justify-between">
-            <h3>Total</h3>
-            <h3>{data?.data?.reduce((acc: any, product: ICart) => acc + product.quantity * product.price, 0).toFixed(2)}৳</h3>
-          </div>
-
-          <Button className="w-1/6 ml-auto">
-            <Link className="" href="/checkout">
-              Checkout
-            </Link>
-          </Button>
+     
         </div>
       </div>
     </PrivateLayout>

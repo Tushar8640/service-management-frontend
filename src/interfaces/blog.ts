@@ -1,4 +1,4 @@
-import {IUser} from "./user";
+import { IUser } from "./user";
 
 export type IBlog = {
   _id: string;
@@ -7,6 +7,7 @@ export type IBlog = {
   image: string;
   user: IUser | string;
   views: number;
+  createdAt: string;
 };
 
 export type IBlogProps = {

@@ -16,19 +16,61 @@ import { useGetSingleCartQuery } from "@/redux/features/cart/cartApi";
 import { useGetSingleUserQuery } from "@/redux/features/auth/authApi";
 import Link from "next/link";
 import { ShoppingBasket } from "lucide-react";
+import { Input } from "../ui/input";
+import { SetStateAction, useEffect, useState } from "react";
+import { searched } from "@/redux/features/filter/filterSlice";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const { user } = useAppSelector((state) => state?.auth);
-  const { data } = useGetSingleCartQuery(user.id);
-  const { data: userData } = useGetSingleUserQuery(user?.id);
 
+  const { data: userData } = useGetSingleUserQuery(user?.id);
+  const [searchText, setSearchText] = useState("");
   const dispatch = useAppDispatch();
+
+  const searchTerm = useAppSelector(
+    (state: { filter: { searchText: any } }) => state.filter.searchText
+  );
+  const router = useRouter();
   //log out
   const handleLogout = () => {
     dispatch(userLoggedOut());
     localStorage.removeItem("auth");
   };
 
+  const handleSearch = (text: SetStateAction<string>) => {
+    setSearchText(text);
+  };
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
+    const debouncedSearch = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        if (searchText) {
+          dispatch(searched(searchText));
+        }
+        if (searchText && router.pathname !== "/services/search") {
+          router.push("/services/search");
+        }
+
+        console.log(router.pathname);
+      }, 2000);
+    };
+
+    debouncedSearch();
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [searchText]);
+
+  useEffect(() => {
+    setSearchText(searchTerm);
+  }, [router]);
+
+  console.log(searchText);
   return (
     <nav className="w-full h-16 fixed top backdrop-blur-lg z-10 text-primary">
       <div className="h-full w-full bg-white/60">
@@ -37,6 +79,15 @@ const Navbar = () => {
             <Link href="/" className="text-gray-900">
               PHOTOWALA
             </Link>
+          </div>
+          <div className="flex items-center">
+            <Input
+              value={searchText}
+              type="search"
+              placeholder="Search..."
+              className="md:w-[100px] lg:w-[300px]"
+              onChange={(e) => handleSearch(e.target.value)}
+            />
           </div>
           <div>
             <ul className="flex items-center">
@@ -61,7 +112,6 @@ const Navbar = () => {
                   </Link>
                 </Button>
               </li>
-        
 
               {user.role !== "user" && user.role && (
                 <li>
@@ -107,7 +157,9 @@ const Navbar = () => {
                     {user?.email && (
                       <>
                         <DropdownMenuItem className="cursor-pointer font-semibold font-serif">
-                          <Link href={"/profile"}>{userData?.data?.name?.firstName}</Link>
+                          <Link href={"/profile"}>
+                            {userData?.data?.name?.firstName}
+                          </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={handleLogout}

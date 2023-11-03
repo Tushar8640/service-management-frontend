@@ -1,11 +1,15 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface IFilterState {
+  searchText: string;
+  path: string | null;
+}
+
+const initialState: IFilterState = {
   searchText: "",
-  path: "/dashboard/seller",
-  category: "",
-  subCategory: "",
+  path: null,
 };
+
 export const filterSlice = createSlice({
   name: "filter",
   initialState,
@@ -13,19 +17,11 @@ export const filterSlice = createSlice({
     searched: (state, action) => {
       state.searchText = action.payload;
     },
-    setCategory: (state, action) => {
-      state.category = action.payload;
-    },
-    setSubCategory: (state, action) => {
-      state.subCategory = action.payload;
-    },
-
-    pathChange: (state, action) => {
+    changedPath: (state, action) => {
       state.path = action.payload;
     },
-    
   },
 });
 
-export const {searched, pathChange, setCategory, setSubCategory} = filterSlice.actions;
+export const { searched, changedPath } = filterSlice.actions;
 export default filterSlice.reducer;

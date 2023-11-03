@@ -1,19 +1,17 @@
-import {IService} from "./service";
-import {IUser} from "./user";
+import { IService } from "./service";
+import { IUser } from "./user";
 
 export type IBooking = {
   _id: string;
   totalCost: number;
   date: string;
   time: string;
-  service: string | IService;
+  service: IService;
   user: string | IUser;
   status: "pending" | "confirmed" | "canceled";
+  createdAt: string;
 };
 
-export type IBookingsProps = {
-  booking: IBooking[];
-};
 export type IBookingProps = {
   booking: IBooking;
 };

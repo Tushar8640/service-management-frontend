@@ -18,6 +18,7 @@ import Link from "next/link";
 import { IBookingProps } from "@/interfaces/booking";
 import Swal from "sweetalert2";
 import { useUpdateBookingStatusMutation } from "@/redux/features/bookings/bookingApi";
+import Moment from "react-moment";
 
 const BookingCard = ({ booking }: IBookingProps) => {
   const { user } = useAppSelector((state) => state.auth);
@@ -54,9 +55,10 @@ const BookingCard = ({ booking }: IBookingProps) => {
     }
   }, [data, isError, isSuccess]);
 
+  console.log(booking);
   return (
-    <Card className="h-full">
-      <Link href={`/services/${booking._id}`}>
+    <Card className="h-full w-[300px]">
+      <Link href={`/services/${booking?.service?._id}`}>
         <CardHeader>
           <img
             src={
@@ -65,19 +67,30 @@ const BookingCard = ({ booking }: IBookingProps) => {
             alt="card image"
             className="h-48"
           />
-          <CardTitle>{booking?._id}</CardTitle>
+          <CardTitle>{booking?.service?.title}</CardTitle>
+          <Moment format="DD-MM-YYYY">{booking?.createdAt}</Moment>
         </CardHeader>
         <CardContent>
-          <p>Category:{booking?.time}</p>
-          <p>Status:{booking?.status}</p>
+          <p>Category: {booking?.service?.category}</p>
+          <p
+            className={`${
+              booking.status === "canceled"
+                ? "text-destructive"
+                : "text-green-500"
+            }`}
+          >
+            Status: {booking?.status}
+          </p>
         </CardContent>
       </Link>
       <CardFooter className="flex items-center justify-between">
-        {booking.status !== "canceled" && (
-          <Button className="" onClick={handleCancel}>
-            Cancel
-          </Button>
-        )}
+        <Button
+          disabled={booking.status === "canceled"}
+          className=""
+          onClick={handleCancel}
+        >
+          Cancel
+        </Button>
       </CardFooter>
     </Card>
   );

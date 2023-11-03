@@ -2,7 +2,7 @@ import {IService} from "./service";
 import {IUser} from "./user";
 
 export type ICart = {
-  serviceId: string | IService;
+  serviceId: IService;
   price: number;
   quantity: number;
   user: string | IUser;

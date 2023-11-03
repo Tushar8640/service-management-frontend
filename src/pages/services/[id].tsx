@@ -10,7 +10,6 @@ export default function ServiceDetails() {
 
   return (
     <MainLayout>
-      <h1>Hello</h1>
       <ServiceDetailsCard />
     </MainLayout>
   );
